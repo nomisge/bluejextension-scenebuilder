@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="bluej-scenebuilder" default="info">
+
+	<property environment="env" />
+	<property file="build.properties" />
+
+	<target name="clean" description="Clean out the build directories">
+		<delete dir="${build.dir}" />
+		<delete file="${lib.dir}/${ant.project.name}.jar" />
+	</target>
+
+	<target name="info">
+		<echo>project BlueJ Scenebuilder Extension</echo>
+		<echo>BaseDir - ${basedir}</echo>
+		<echo>Homepage - ${site}</echo>
+		<echo>Build directory - ${build.dir}</echo>
+		<echo>Buildversion - ${buildversion}</echo>
+	</target>
+
+	<path id="classpath.base">
+		<pathelement location="${build.dir}" />
+		<pathelement path="${lib.dir}/bluejext2.jar" />
+		<pathelement location="${lib.dir}/javafx.base.jar" />
+		<pathelement location="${lib.dir}/javafx.controls.jar" />
+		<pathelement location="${lib.dir}/javafx.fxml.jar" />
+		<pathelement location="${lib.dir}/javafx.graphics.jar" />
+		<pathelement location="${lib.dir}/javafx.media.jar" />
+		<pathelement location="${lib.dir}/javafx.properties" />
+		<pathelement location="${lib.dir}/javafx.swing.jar" />
+		<pathelement location="${lib.dir}/javafx.web.jar" />
+	</path>
+
+	<macrodef name="compilecommon">
+		<attribute name="destdir" />
+		<attribute name="srcdir" />
+		<attribute name="classpath" />
+		<sequential>
+
+			<!-- JavaFX got removed from the Oracle's JDK for arm and Java 11 -->
+			<condition property="fx.unavailable" value="true">
+				<or>
+					<equals arg1="${os.arch}" arg2="arm" />
+					<equals arg1="${os.arch}" arg2="aarch64" />
+				</or>
+			</condition>
+
+			<!-- Create target directories for compiled class files -->
+			<mkdir dir="@{destdir}" />
+			<mkdir dir="@{destdir}/lib/german" />
+			<mkdir dir="@{destdir}/lib/english" />
+
+
+			<!-- Call the java compiler and set some parameters. 
+			source and target version of Java should be the same, 
+			else it gets complicated. -->
+			<javac source="11" target="11" encoding="UTF-8" includeAntRuntime="false" debug="true" destdir="@{destdir}" nowarn="true">
+				<classpath refid="@{classpath}" />
+				<src path="@{srcdir}" />
+			</javac>
+		</sequential>
+	</macrodef>
+
+	<target name="compile" description="Compile">
+		<compilecommon srcdir="${src.dir}" destdir="${build.dir}" classpath="classpath.base" />
+	</target>
+
+	<target name="build" depends="compile" description="Build all target directories for binaries as well as compile the projects classes and build a jar file from the class files.">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}/META-INF" />
+		<manifest file="${build.dir}/META-INF/MANIFEST.MF">
+			<attribute name="Main-Class" value="de.nomisge.bluejextensions.scenebuilder.ScenebuilderExtension" />
+		</manifest>
+		<jar basedir="${build.dir}" destfile="${lib.dir}/${ant.project.name}.jar" manifest="${build.dir}/META-INF/MANIFEST.MF">
+			<zipfileset dir="${src.dir}/lib" includes="**/*labels" prefix="lib"/>
+			<fileset dir="" includes="bluej.properties"/>
+		</jar>
+	</target>
+
+
+</project>

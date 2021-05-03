@@ -1,0 +1,10 @@
+# Extensions 
+prefmgr.extensions.pathScenebuilder=Path to JavaFX Scenebuilder executable
+menu.tools.openscenebuilder=Open Scenebuilder
+xtsn.scenebuilder.open=Edit FXML
+xtsn.scenebuilder.newfile=New FXML file...
+xtsn.scenebuilder.newfileheader=Enter name of new fxml file.
+xtsn.scenebuilder.newfilename=file name
+xtsn.scenebuilder.path=Path
+xtsn.scenebuilder.error.open=A problem occurred opening
+xtsn.scenebuilder.error.execnotfound=SceneBuilder executable not found, please enter correct path

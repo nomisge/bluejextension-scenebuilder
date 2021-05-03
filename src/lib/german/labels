@@ -1,0 +1,10 @@
+# Extensions 
+prefmgr.extensions.pathScenebuilder=Pfad zu JavaFX Scenebuilder
+xtsn.scenebuilder.open=Scenebuilder \u00f6ffnen
+xtsn.scenebuilder.edit=FXML bearbeiten
+xtsn.scenebuilder.newfile=Neue FXML Datei...
+xtsn.scenebuilder.newfileheader=Dateiname der neuen Fxml-Datei eingeben
+xtsn.scenebuilder.newfilename=Dateiname
+xtsn.scenebuilder.path=Pfad
+xtsn.scenebuilder.error.open=Es gab ein Problem beim \u00f6ffnen von
+xtsn.scenebuilder.error.execnotfound=SceneBuilder nicht gefunden, bitte Pfad zur ausf\u00fchrbaren Datei eingeben.
